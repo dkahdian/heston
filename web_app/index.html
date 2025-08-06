@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heston Model Option Pricing</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Heston Model Monte Carlo Option Pricing</h1>
+        </header>
+
+        <div class="main-content">
+            <!-- Parameter Input Form -->
+            <div class="card parameters-card">
+                <h2>Model Parameters</h2>
+                <form id="parametersForm">
+                    <div class="param-group">
+                        <div class="param-row">
+                            <label for="S0">Initial Stock Price (S₀):</label>
+                            <input type="number" id="S0" value="100" step="0.01" min="0.01">
+                        </div>
+                        <div class="param-row">
+                            <label for="K">Call Option Strike Price (K):</label>
+                            <input type="number" id="K" value="100" step="0.01" min="0.01">
+                        </div>
+                    </div>
+
+                    <div class="param-group">
+                        <div class="param-row">
+                            <label for="r">Risk-free Rate (r):</label>
+                            <input type="number" id="r" value="0.05" step="0.001" min="0">
+                        </div>
+                        <div class="param-row">
+                            <label for="T">Time to Maturity (T):</label>
+                            <input type="number" id="T" value="1.0" step="0.01" min="0.01">
+                        </div>
+                    </div>
+
+                    <div class="param-group">
+                        <div class="param-row">
+                            <label for="v0">Initial Variance (v₀):</label>
+                            <input type="number" id="v0" value="0.04" step="0.001" min="0.001">
+                        </div>
+                        <div class="param-row">
+                            <label for="theta">Long-term Variance (θ):</label>
+                            <input type="number" id="theta" value="0.1" step="0.001" min="0.001">
+                        </div>
+                    </div>
+
+                    <div class="param-group">
+                        <div class="param-row">
+                            <label for="kappa">Mean Reversion (κ):</label>
+                            <input type="number" id="kappa" value="1.0" step="0.1" min="0.1">
+                        </div>
+                        <div class="param-row">
+                            <label for="xi">Vol of Vol (ξ):</label>
+                            <input type="number" id="xi" value="0.2" step="0.01" min="0.01">
+                        </div>
+                    </div>
+
+                    <div class="param-group">
+                        <div class="param-row">
+                            <label for="rho">Price-volatility Correlation (ρ):</label>
+                            <input type="number" id="rho" value="-0.5" step="0.01" min="-1" max="1">
+                        </div>
+                        <div class="param-row">
+                            <label for="N">Time Steps (N):</label>
+                            <input type="number" id="N" value="1000" step="100" min="100">
+                        </div>
+                    </div>
+
+                    <div class="button-group">
+                        <button type="button" id="startBtn">Start Simulation</button>
+                        <button type="button" id="stopBtn" disabled>Stop Simulation</button>
+                        <button type="button" id="resetBtn">Reset</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Results Display -->
+            <div class="card results-card">
+                <h2>Results</h2>
+                <div class="results-grid">
+                    <div class="result-item">
+                        <label>Simulations Run:</label>
+                        <span id="simulationCount">0</span>
+                    </div>
+                    <div class="result-item">
+                        <label>Heston Option Price:</label>
+                        <span id="hestonPrice">-</span>
+                    </div>
+                    <div class="result-item">
+                        <label>Black-Scholes Price:</label>
+                        <span id="blackScholesPrice">-</span>
+                    </div>
+                    <div class="result-item">
+                        <label>Difference:</label>
+                        <span id="priceDifference">-</span>
+                    </div>
+                </div>
+                
+                <div class="progress-container">
+                    <div class="progress-bar">
+                        <div id="progressFill" class="progress-fill"></div>
+                    </div>
+                    <span id="progressText">Ready to start simulation</span>
+                </div>
+            </div>
+
+            <!-- Price Path Chart -->
+            <div class="card chart-card">
+                <canvas id="priceChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <script src="simulation.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
